@@ -43,7 +43,7 @@ export default function App() {
       </Routes>
 
       <footer className="footer">
-        <h3>Thanks for visiting 🧡</h3>
+        <h3>Thanks for visiting 👨‍🍳🧡</h3>
         <a
           className="social"
           href={about.linkedin}
