@@ -57,7 +57,7 @@ export default function Lightbox({ items, index, onClose, onChange }) {
           }}
         >
           {item.type === "video" ? (
-            <video src={item.src} controls autoPlay style={mediaStyle} />
+            <video src={item.src} controls autoPlay loop playsInline style={mediaStyle} />
           ) : (
             <img src={item.src} alt={item.title} style={mediaStyle} />
           )}
