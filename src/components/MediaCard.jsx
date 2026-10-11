@@ -1,9 +1,10 @@
-import { useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function MediaCard({ item, index, onOpen }) {
   const isVideo = item.type === "video";
   const videoRef = useRef(null);
+  const [failed, setFailed] = useState(false);
   const isTouch =
     typeof window !== "undefined" &&
     window.matchMedia("(hover: none)").matches;
@@ -19,15 +20,19 @@ export default function MediaCard({ item, index, onOpen }) {
   return (
     <motion.div
       className="item"
-      initial={{ opacity: 0, y: 60, scale: 0.94 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.6, delay: (index % 3) * 0.1, ease: "easeOut" }}
-      whileHover={{ y: -10, rotate: index % 2 === 0 ? 0.8 : -0.8 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, delay: (index % 4) * 0.06, ease: "easeOut" }}
+      whileHover={{ y: -8 }}
       onClick={onOpen}
     >
-      {isVideo ? (
+      {failed ? (
+        <div className="broken">
+          <span>{item.title}</span>
+          <small>Image not found</small>
+        </div>
+      ) : isVideo ? (
         <>
           <video
             ref={videoRef}
@@ -37,6 +42,7 @@ export default function MediaCard({ item, index, onOpen }) {
             loop
             playsInline
             preload="auto"
+            onError={() => setFailed(true)}
             onMouseEnter={(e) => !isTouch && e.currentTarget.play()}
             onMouseLeave={(e) => {
               if (isTouch) return;
@@ -47,7 +53,12 @@ export default function MediaCard({ item, index, onOpen }) {
           <div className="play-badge">▶</div>
         </>
       ) : (
-        <img src={item.src} alt={item.title} loading="lazy" />
+        <img
+          src={item.src}
+          alt={item.title}
+          decoding="async"
+          onError={() => setFailed(true)}
+        />
       )}
       <div className="overlay">
         <span className="chip">{item.title}</span>
