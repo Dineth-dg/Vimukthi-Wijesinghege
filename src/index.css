@@ -612,3 +612,48 @@ html.lenis, html.lenis body { height: auto; }
   .about-stats { grid-template-columns: 1fr; margin-top: 80px; }
   .about-block { margin-top: 80px; }
 }
+
+/* Logo: full name on desktop, first name on phones */
+.logo-short { display: none; }
+
+/* Videos always get a visible box, even before they load */
+.item video { min-height: 180px; background: var(--soft); object-fit: cover; }
+
+@media (max-width: 600px) {
+  .logo-full { display: none; }
+  .logo-short { display: inline; }
+
+  .navbar {
+    width: auto; max-width: calc(100% - 24px);
+    padding: 7px 8px 7px 18px; gap: 4px;
+  }
+  .logo { font-size: 1.05rem; margin-right: 8px; }
+  .nav-btn { padding: 9px 16px; font-size: .8rem; }
+  .nav-link { padding: 9px 12px; font-size: .85rem; }
+}
+
+/* Stop any sideways overflow on phones */
+#root { overflow-x: hidden; }
+
+.logo-short { display: none; }
+
+@media (max-width: 600px) {
+  .navbar {
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 6px 6px 6px 16px !important;
+  }
+  .logo-full { display: none !important; }
+  .logo-short { display: inline !important; }
+  .logo { font-size: 1rem; margin: 0 auto 0 0 !important; min-width: 0; }
+  .nav-btn { padding: 9px 14px; font-size: .78rem; white-space: nowrap; flex-shrink: 0; }
+  .nav-link { padding: 9px 10px; font-size: .8rem; flex-shrink: 0; }
+
+  /* The tilted strip was wider than the screen */
+  .marquee { margin: 20px 0 !important; }
+}

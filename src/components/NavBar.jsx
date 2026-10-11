@@ -14,17 +14,17 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <Link to="/" className="logo">Vimukthi Wijesinghege</Link>
-        
-         <Link to="/#gallery" className="nav-btn">View Gallery</Link>
-        
+        <Link to="/" className="logo">
+          <span className="logo-full">Vimukthi Wijesinghege</span>
+          <span className="logo-short">Vimukthi</span>
+        </Link>
+        <Link to="/#gallery" className="nav-btn">View Gallery</Link>
         <NavLink
           to="/about"
           className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}
         >
           About
         </NavLink>
-       
       </motion.nav>
     </>
   );

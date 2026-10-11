@@ -1,7 +1,20 @@
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function MediaCard({ item, index, onOpen }) {
   const isVideo = item.type === "video";
+  const videoRef = useRef(null);
+  const isTouch =
+    typeof window !== "undefined" &&
+    window.matchMedia("(hover: none)").matches;
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (isVideo && isTouch && v) {
+      v.muted = true;
+      v.play().catch(() => {});
+    }
+  }, [isVideo, isTouch]);
 
   return (
     <motion.div
@@ -17,13 +30,16 @@ export default function MediaCard({ item, index, onOpen }) {
       {isVideo ? (
         <>
           <video
+            ref={videoRef}
             src={`${item.src}#t=0.5`}
+            poster={item.poster}
             muted
             loop
             playsInline
-            preload="metadata"
-            onMouseEnter={(e) => e.currentTarget.play()}
+            preload="auto"
+            onMouseEnter={(e) => !isTouch && e.currentTarget.play()}
             onMouseLeave={(e) => {
+              if (isTouch) return;
               e.currentTarget.pause();
               e.currentTarget.currentTime = 0.5;
             }}
